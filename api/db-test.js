@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 module.exports = async function handler(req, res) {
   // CORS Headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -10,24 +8,10 @@ module.exports = async function handler(req, res) {
     return res.status(200).end();
   }
 
-  try {
-    if (!process.env.MONGODB_URI) {
-      return res.status(500).json({
-        error: "MONGODB_URI is missing"
-      });
-    }
-
-    // Direct connect as requested
-    await mongoose.connect(process.env.MONGODB_URI);
-
-    return res.status(200).json({
-      message: "MongoDB connected ✅"
-    });
-  } catch (error) {
-    console.error("DB ERROR:", error);
-
-    return res.status(500).json({
-      error: error.message
-    });
-  }
+  // Minimal working version for verification
+  return res.status(200).json({
+    message: "DB route working ✅",
+    status: "ok",
+    timestamp: new Date().toISOString()
+  });
 };
